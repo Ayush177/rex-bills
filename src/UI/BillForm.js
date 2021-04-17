@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Form, Card, Button, Accordion } from "react-bootstrap";
-import Items from "../components/ItemForm";
+import ItemForm from "../components/ItemForm";
 
-const BillForm = () => {
+const BillForm = (props) => {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [itemCount, setItemCount] = useState(1);
@@ -22,6 +22,10 @@ const BillForm = () => {
   //   console.log(itemQuantity, itemPrice);
   //   console.log(itemTotal);
   // })
+
+  const submitAllItems = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <Card className="m-3">
@@ -49,17 +53,24 @@ const BillForm = () => {
 
           <Accordion defaultActiveKey="0">
             {[...Array(itemCount)].map((e, i) => (
-              <Items index={i} />
+              <ItemForm
+                index={i}
+                setItems={props.setItems}
+                items={props.items}
+              />
             ))}
           </Accordion>
-          <Button onClick={() => setItemCount(itemCount + 1)}>Add item</Button>
-
+          <div>
+            <Button onClick={() => setItemCount(itemCount + 1)}>
+              Add item
+            </Button>
+          </div>
           <p>{itemTotal}</p>
 
           <Form.Group controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="Check me out" />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" onClick={submitAllItems}>
             Submit
           </Button>
         </Form>

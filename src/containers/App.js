@@ -1,10 +1,11 @@
-import Form from '../UI/Form';
+import { Router, Link } from "@reach/router";
+import EditBill from "../pages/EditBill";
 
 const App = () => {
   return (
-    <div>
-      <Form></Form>
-    </div>
+    <Router>
+      <EditBill path="/" />
+    </Router>
   );
-}
+};
 export default App;
