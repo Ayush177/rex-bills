@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Card, Button, Accordion } from "react-bootstrap";
 import ItemForm from "../components/ItemForm";
+import firebase from "../utils/firebase";
 
 const BillForm = (props) => {
   const [name, setName] = useState("");
@@ -25,6 +26,25 @@ const BillForm = (props) => {
 
   const submitAllItems = (e) => {
     e.preventDefault();
+    const currentTime = new Date();
+    const currentOffset = currentTime.getTimezoneOffset();
+    const ISTOffset = 330; // IST offset UTC +5:30
+    const ISTTime = new Date(
+      currentTime.getTime() + (ISTOffset + currentOffset) * 60000
+    );
+
+    const billRef = firebase
+      .database()
+      .ref(
+        `${ISTTime.getDate()}-${
+          ISTTime.getMonth() + 1
+        }-${ISTTime.getFullYear()}`
+      );
+    billRef.push({
+      name,
+      date,
+      items: props.items,
+    });
   };
 
   return (
@@ -70,7 +90,12 @@ const BillForm = (props) => {
           <Form.Group controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="Check me out" />
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={submitAllItems}>
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={submitAllItems}
+            disabled={props.items.length <= 0}
+          >
             Submit
           </Button>
         </Form>

@@ -16,24 +16,13 @@ const BillTable = (props) => {
         <tbody>
           {props.items.map((item, index) => (
             <tr>
-              <td>{index}</td>
+              <td>{index + 1}</td>
               <td>{item.name}</td>
               <td>{item.quantity}</td>
               <td>{item.price}</td>
               <td>{item.total}</td>
             </tr>
           ))}
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td colSpan="2">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
         </tbody>
       </Table>
     </Card>
