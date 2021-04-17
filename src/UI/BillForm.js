@@ -11,21 +11,21 @@ const BillForm = (props) => {
   // const [itemPrice, setItemPrice] = useState(0);
   // const [itemQuantity, setItemQuantity] = useState(0);
   const [itemTotal, setItemTotal] = useState(0);
+  const [submitDisable, setSubmitDisable] = useState(true);
   // const [billTotal, setBillTotal] = useState("");
 
   // const calculate = (e) => {
   //   setItemQuantity(parseInt(e.target.value), () => {});
   // };
 
-  // useEffect(() => {
-  //   // if(itemQuantity>=0)
-  //   setItemTotal(parseInt(itemPrice) * parseInt(itemQuantity));
-  //   console.log(itemQuantity, itemPrice);
-  //   console.log(itemTotal);
-  // })
+  useEffect(() => {
+    if (props.items.length <= 0) setSubmitDisable(true);
+    else setSubmitDisable(false);
+  }, [props.items]);
 
   const submitAllItems = (e) => {
     e.preventDefault();
+    setSubmitDisable(true);
     const currentTime = new Date();
     const currentOffset = currentTime.getTimezoneOffset();
     const ISTOffset = 330; // IST offset UTC +5:30
@@ -40,11 +40,13 @@ const BillForm = (props) => {
           ISTTime.getMonth() + 1
         }-${ISTTime.getFullYear()}`
       );
-    billRef.push({
-      name,
-      date,
-      items: props.items,
-    });
+    billRef
+      .push({
+        name,
+        date,
+        items: props.items,
+      })
+      .then((res) => setSubmitDisable(false));
   };
 
   return (
