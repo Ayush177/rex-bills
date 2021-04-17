@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Form, Card, Button, Accordion } from "react-bootstrap";
 import ItemForm from "../components/ItemForm";
-import firebase from "../utils/firebase";
+import Axios from "../utils/Axios";
+import { navigate } from "@reach/router";
 
 const BillForm = (props) => {
   const [name, setName] = useState("");
@@ -23,6 +24,11 @@ const BillForm = (props) => {
     else setSubmitDisable(false);
   }, [props.items]);
 
+  const disableSubmitAll = () => {
+    if (props.items.length <= 0 || name === "" || date === "") return true;
+    return false;
+  };
+
   const submitAllItems = (e) => {
     e.preventDefault();
     setSubmitDisable(true);
@@ -33,20 +39,20 @@ const BillForm = (props) => {
       currentTime.getTime() + (ISTOffset + currentOffset) * 60000
     );
 
-    const billRef = firebase
-      .database()
-      .ref(
-        `${ISTTime.getDate()}-${
-          ISTTime.getMonth() + 1
-        }-${ISTTime.getFullYear()}`
-      );
-    billRef
-      .push({
-        name,
-        date,
-        items: props.items,
+    Axios.post("/bill.json", {
+      name,
+      date,
+      items: props.items,
+    })
+      .then((res) => {
+        console.log(res);
+        setSubmitDisable(false);
+        navigate(`bill-detail/${res.data.name}`);
       })
-      .then((res) => setSubmitDisable(false));
+      .catch((err) => {
+        console.error(err);
+        setSubmitDisable(false);
+      });
   };
 
   return (
@@ -96,7 +102,7 @@ const BillForm = (props) => {
             variant="primary"
             type="submit"
             onClick={submitAllItems}
-            disabled={props.items.length <= 0}
+            disabled={disableSubmitAll()}
           >
             Submit
           </Button>
