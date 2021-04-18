@@ -30,19 +30,33 @@ const BillDetail = (props) => {
     <div className="m-3">
       <Card className="p-0" id="capture">
         <div id="bill-sanpshot">
-          <h2>Estimate</h2>
+          <h2 className="text-center">Estimate</h2>
           {detail ? (
             <div>
-              <h5>{detail.userName}</h5>
-              <h6>{detail.date}</h6>
+              <div
+                style={{ display: "flex", justifyContent: "space-between" }}
+                className="px-2 mt-3 mb-2"
+              >
+                <h6>
+                  <strong>Name:</strong> {detail.userName}
+                </h6>
+                <h6>{detail.date.split("-").reverse().join("-")}</h6>
+              </div>
               <BillTable items={detail.items} />
             </div>
           ) : (
             ""
           )}
         </div>
-        <Button onClick={printDocument}>Print</Button>
-        <Button onClick={() => navigate(`/bill/${props.id}`)}>Edit</Button>
+        <Button onClick={printDocument} className="my-3">
+          Print
+        </Button>
+        <Button
+          onClick={() => navigate(`/bill/${props.id}`)}
+          variant="secondary"
+        >
+          Edit
+        </Button>
       </Card>
     </div>
   );
