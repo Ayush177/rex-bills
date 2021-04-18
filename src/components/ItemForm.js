@@ -134,10 +134,16 @@ const Items = (props) => {
               <h5>Item Total</h5>
               <p>{itemTotal}</p>
             </div>
-            <Button disabled={disableSubmit()} onClick={submitItem}>
+            <Button
+              disabled={disableSubmit()}
+              onClick={submitItem}
+              className="mx-2"
+            >
               Submit Item
             </Button>
-            <Button onClick={deleteItem}>Delete Item</Button>
+            <Button onClick={deleteItem} variant="danger" className="mx-2">
+              Delete
+            </Button>
           </Form>
         </Card.Body>
       </Accordion.Collapse>
