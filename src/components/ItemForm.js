@@ -2,10 +2,25 @@ import React, { useState, useEffect } from "react";
 import { Card, Accordion, Button, Form } from "react-bootstrap";
 
 const Items = (props) => {
-  const [itemName, setItemName] = useState("");
-  const [itemPrice, setItemPrice] = useState(0);
-  const [itemQuantity, setItemQuantity] = useState(0);
-  const [itemTotal, setItemTotal] = useState(0);
+  const [itemName, setItemName] = useState(
+    props.item.name ? props.item.name : ""
+  );
+  const [itemPrice, setItemPrice] = useState(
+    props.item.price ? props.item.price : 0
+  );
+  const [itemQuantity, setItemQuantity] = useState(
+    props.item.quantity ? props.item.quantity : 0
+  );
+  const [itemTotal, setItemTotal] = useState(
+    props.item.total ? props.item.total : 0
+  );
+
+  useEffect(() => {
+    setItemName(props.item.name ? props.item.name : "");
+    setItemPrice(props.item.price ? props.item.price : "");
+    setItemQuantity(props.item.quantity ? props.item.quantity : "");
+    setItemTotal(props.item.total ? props.item.total : "");
+  }, [props.items]);
 
   useEffect(() => {
     if (itemQuantity >= 0)
@@ -26,13 +41,22 @@ const Items = (props) => {
 
   const submitItem = (e) => {
     e.preventDefault();
-    const item = {
+    const curItem = {
       name: itemName,
       price: itemPrice,
       quantity: itemQuantity,
       total: itemTotal,
     };
-    if (!isDuplicate(item)) props.setItems([...props.items, item]);
+    if (!isDuplicate(curItem)) {
+      props.setItems((items) =>
+        items.map((item, i) => {
+          if (i === props.index) {
+            return (item = curItem);
+          }
+          return item;
+        })
+      );
+    }
   };
 
   const calculate = (e) => {
@@ -42,6 +66,10 @@ const Items = (props) => {
   const disableSubmit = () => {
     if (itemName === "" || itemPrice <= 0 || itemQuantity <= 0) return true;
     return false;
+  };
+
+  const deleteItem = () => {
+    props.setItems((items) => items.filter((item, i) => i !== props.index));
   };
 
   return (
@@ -112,6 +140,7 @@ const Items = (props) => {
             <Button disabled={disableSubmit()} onClick={submitItem}>
               Submit Item
             </Button>
+            <Button onClick={deleteItem}>Delete Item</Button>
           </Form>
         </Card.Body>
       </Accordion.Collapse>

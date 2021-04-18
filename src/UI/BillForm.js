@@ -5,24 +5,32 @@ import Axios from "../utils/Axios";
 import { navigate } from "@reach/router";
 
 const BillForm = (props) => {
+  let today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const yyyy = today.getFullYear();
+  today = yyyy + "-" + mm + "-" + dd;
   const [userName, setUserName] = useState("");
-  const [date, setDate] = useState("");
-  const [itemCount, setItemCount] = useState(1);
-  // const [itemName, setItemName] = useState("");
-  // const [itemPrice, setItemPrice] = useState(0);
-  // const [itemQuantity, setItemQuantity] = useState(0);
-  const [itemTotal, setItemTotal] = useState(0);
+  const [date, setDate] = useState(today);
   const [submitDisable, setSubmitDisable] = useState(true);
-  // const [billTotal, setBillTotal] = useState("");
-
-  // const calculate = (e) => {
-  //   setItemQuantity(parseInt(e.target.value), () => {});
-  // };
+  const [isDelhi, setIsDelhi] = useState(false);
 
   useEffect(() => {
     if (props.items.length <= 0) setSubmitDisable(true);
     else setSubmitDisable(false);
   }, [props.items]);
+
+  useEffect(() => {
+    console.log(date);
+    if (props.id)
+      Axios.get(`/bills/${props.id}.json`).then((res) => {
+        console.log("res data", res.data);
+        setUserName(res.data.userName);
+        setDate(res.data.date);
+        setIsDelhi(res.data.isDelhi);
+        props.setItems(res.data.items);
+      });
+  }, []);
 
   const disableSubmitAll = () => {
     if (props.items.length <= 0 || userName === "" || date === "") return true;
@@ -32,27 +40,40 @@ const BillForm = (props) => {
   const submitAllItems = (e) => {
     e.preventDefault();
     setSubmitDisable(true);
-    const currentTime = new Date();
-    const currentOffset = currentTime.getTimezoneOffset();
-    const ISTOffset = 330; // IST offset UTC +5:30
-    const ISTTime = new Date(
-      currentTime.getTime() + (ISTOffset + currentOffset) * 60000
-    );
 
-    Axios.post("/bills.json", {
-      userName,
-      date,
-      items: props.items,
-    })
-      .then((res) => {
-        console.log(res);
-        setSubmitDisable(false);
-        navigate(`bill-detail/${res.data.name}`);
+    if (!props.id) {
+      Axios.post("/bills.json", {
+        userName,
+        date,
+        items: props.items,
+        isDelhi,
       })
-      .catch((err) => {
-        console.error(err);
-        setSubmitDisable(false);
-      });
+        .then((res) => {
+          console.log(res);
+          setSubmitDisable(false);
+          navigate(`bill-detail/${res.data.name}`);
+        })
+        .catch((err) => {
+          console.error(err);
+          setSubmitDisable(false);
+        });
+    } else {
+      Axios.put(`/bills/${props.id}.json`, {
+        userName,
+        date,
+        items: props.items,
+        isDelhi,
+      })
+        .then((res) => {
+          console.log(res);
+          setSubmitDisable(false);
+          navigate(`/bill-detail/${props.id}`);
+        })
+        .catch((err) => {
+          console.error(err);
+          setSubmitDisable(false);
+        });
+    }
   };
 
   return (
@@ -80,29 +101,44 @@ const BillForm = (props) => {
           </Form.Group>
 
           <Accordion defaultActiveKey="0">
-            {[...Array(itemCount)].map((e, i) => (
-              <ItemForm
-                index={i}
-                setItems={props.setItems}
-                items={props.items}
-              />
-            ))}
+            {props.items
+              ? props.items.map((item, i) => (
+                  <ItemForm
+                    index={i}
+                    setItems={props.setItems}
+                    items={props.items}
+                    key={i}
+                    item={item}
+                  />
+                ))
+              : ""}
           </Accordion>
           <div>
-            <Button onClick={() => setItemCount(itemCount + 1)}>
+            <Button
+              onClick={() =>
+                props.setItems([
+                  ...props.items,
+                  { name: "", price: 0, quantity: 0, total: 0 },
+                ])
+              }
+            >
               Add item
             </Button>
           </div>
-          <p>{itemTotal}</p>
 
           <Form.Group controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
+            <Form.Check
+              type="checkbox"
+              label="Delhi Bill"
+              checked={isDelhi}
+              onChange={() => setIsDelhi(!isDelhi)}
+            />
           </Form.Group>
           <Button
             variant="primary"
             type="submit"
             onClick={submitAllItems}
-            disabled={disableSubmitAll()}
+            disabled={submitDisable}
           >
             Submit
           </Button>
