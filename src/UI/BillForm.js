@@ -120,7 +120,7 @@ const BillForm = (props) => {
                 ))
               : ""}
           </Accordion>
-          <div>
+          <div className="text-center">
             <Button
               onClick={() =>
                 props.setItems([
@@ -128,6 +128,8 @@ const BillForm = (props) => {
                   { name: "", price: 0, quantity: 0, total: 0 },
                 ])
               }
+              className="my-4"
+              variant="secondary"
             >
               Add item
             </Button>
@@ -141,14 +143,16 @@ const BillForm = (props) => {
               onChange={() => setIsDelhi(!isDelhi)}
             />
           </Form.Group>
-          <Button
-            variant="primary"
-            type="submit"
-            onClick={submitAllItems}
-            disabled={disableSubmitAll()}
-          >
-            Submit
-          </Button>
+          <div className="text-center">
+            <Button
+              type="submit"
+              onClick={submitAllItems}
+              disabled={disableSubmitAll()}
+              variant="success"
+            >
+              Calculate Bill
+            </Button>
+          </div>
         </Form>
       </Card.Body>
     </Card>
