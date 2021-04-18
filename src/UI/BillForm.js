@@ -33,7 +33,13 @@ const BillForm = (props) => {
   }, []);
 
   const disableSubmitAll = () => {
-    if (props.items.length <= 0 || userName === "" || date === "") return true;
+    if (
+      submitDisable ||
+      props.items.length <= 0 ||
+      userName === "" ||
+      date === ""
+    )
+      return true;
     return false;
   };
 
@@ -138,7 +144,7 @@ const BillForm = (props) => {
             variant="primary"
             type="submit"
             onClick={submitAllItems}
-            disabled={submitDisable}
+            disabled={disableSubmitAll()}
           >
             Submit
           </Button>
