@@ -1,4 +1,4 @@
-import { Link, navigate } from "@reach/router";
+import { navigate } from "@reach/router";
 import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import Axios from "../utils/Axios";
