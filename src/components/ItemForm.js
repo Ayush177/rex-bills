@@ -20,6 +20,7 @@ const Items = (props) => {
     setItemPrice(props.item.price ? props.item.price : "");
     setItemQuantity(props.item.quantity ? props.item.quantity : "");
     setItemTotal(props.item.total ? props.item.total : "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.items]);
 
   useEffect(() => {
@@ -57,10 +58,6 @@ const Items = (props) => {
         })
       );
     }
-  };
-
-  const calculate = (e) => {
-    setItemQuantity(parseInt(e.target.value), () => {});
   };
 
   const disableSubmit = () => {
