@@ -6,7 +6,7 @@ const Bill = () => {
   const [items, setItems] = useState([]);
 
   return (
-    <div>
+    <div className="m-3">
       <BillForm setItems={setItems} items={items} />
       {items.length ? <BillTable items={items} /> : ""}
     </div>

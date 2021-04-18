@@ -1,9 +1,13 @@
 import { Table, Card } from "react-bootstrap";
 
 const BillTable = (props) => {
+  let grandTotal = 0;
+  for (let item of props.items) {
+    grandTotal += parseInt(item.total);
+  }
   return (
-    <Card className="m-3">
-      <Table striped bordered hover size="sm">
+    <Card>
+      <Table striped bordered hover size="sm" className="m-0">
         <thead>
           <tr>
             <th>#</th>
@@ -18,11 +22,19 @@ const BillTable = (props) => {
             <tr>
               <td>{index + 1}</td>
               <td>{item.name}</td>
-              <td>{item.quantity}</td>
               <td>{item.price}</td>
+              <td>{item.quantity}</td>
               <td>{item.total}</td>
             </tr>
           ))}
+          <tr>
+            <td colSpan="4">
+              <strong>Grand Total</strong>
+            </td>
+            <td>
+              <strong>{grandTotal}</strong>
+            </td>
+          </tr>
         </tbody>
       </Table>
     </Card>

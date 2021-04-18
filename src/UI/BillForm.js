@@ -5,7 +5,7 @@ import Axios from "../utils/Axios";
 import { navigate } from "@reach/router";
 
 const BillForm = (props) => {
-  const [name, setName] = useState("");
+  const [userName, setUserName] = useState("");
   const [date, setDate] = useState("");
   const [itemCount, setItemCount] = useState(1);
   // const [itemName, setItemName] = useState("");
@@ -25,7 +25,7 @@ const BillForm = (props) => {
   }, [props.items]);
 
   const disableSubmitAll = () => {
-    if (props.items.length <= 0 || name === "" || date === "") return true;
+    if (props.items.length <= 0 || userName === "" || date === "") return true;
     return false;
   };
 
@@ -39,8 +39,8 @@ const BillForm = (props) => {
       currentTime.getTime() + (ISTOffset + currentOffset) * 60000
     );
 
-    Axios.post("/bill.json", {
-      name,
+    Axios.post("/bills.json", {
+      userName,
       date,
       items: props.items,
     })
@@ -56,7 +56,7 @@ const BillForm = (props) => {
   };
 
   return (
-    <Card className="m-3">
+    <Card className="mb-3">
       <Card.Title className="text-center mt-3">Bill Details</Card.Title>
       <Card.Body>
         <Form>
@@ -65,8 +65,8 @@ const BillForm = (props) => {
             <Form.Control
               type="text"
               placeholder="Enter name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
             />
           </Form.Group>
 
