@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 import Axios from "../utils/Axios";
 
 const Bills = () => {
-  const [bills, setBills] = useState([]);
+  const [bills, setBills] = useState();
   useEffect(() => {
     Axios.get("/bills.json").then((res) => {
       console.log(Object.keys(res.data)[0]);

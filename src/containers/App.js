@@ -1,4 +1,4 @@
-import { Router } from "@reach/router";
+import { Router, Redirect } from "@reach/router";
 import EditBill from "../pages/EditBill";
 import BillDetail from "../pages/BillDetail";
 import Bills from "../pages/Bills";
@@ -9,6 +9,7 @@ const App = () => {
     <>
       <TheNavbar />
       <Router>
+        <Redirect noThrow from="/" to="/bills" />
         <EditBill path="/bill" />
         <EditBill path="/bill/:id" />
         <BillDetail path="/bill-detail/:id" />
