@@ -3,7 +3,7 @@ import Axios from "../utils/Axios";
 import BillTable from "../components/BillTable";
 import { Card, Button } from "react-bootstrap";
 import html2canvas from "html2canvas";
-import { WhatsappShareButton, WhatsappIcon } from "react-share";
+import { navigate } from "@reach/router";
 
 const BillDetail = (props) => {
   const [detail, setDetail] = useState();
@@ -41,6 +41,7 @@ const BillDetail = (props) => {
           )}
         </div>
         <Button onClick={printDocument}>Print</Button>
+        <Button onClick={() => navigate(`/bill/${props.id}`)}>Edit</Button>
       </Card>
     </div>
   );
