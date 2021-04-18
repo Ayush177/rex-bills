@@ -81,7 +81,7 @@ const Items = (props) => {
                 required
                 placeholder="Enter item price"
                 value={itemPrice}
-                onChange={(e) => setItemPrice(e.target.value)}
+                onChange={(e) => setItemPrice(parseInt(e.target.value))}
                 isInvalid={itemPrice <= 0}
                 isValid={itemPrice > 0}
               />
@@ -97,12 +97,12 @@ const Items = (props) => {
                 required
                 placeholder="Enter item quantity"
                 value={itemQuantity}
-                onChange={calculate}
+                onChange={(e) => setItemQuantity(parseInt(e.target.value))}
                 isInvalid={itemQuantity <= 0}
                 isValid={itemQuantity > 0}
               />
               <Form.Control.Feedback type="invalid">
-                Please provide a valid quabtity.
+                Please provide a valid quantity.
               </Form.Control.Feedback>
             </Form.Group>
             <div>
