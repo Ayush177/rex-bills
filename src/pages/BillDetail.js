@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "../utils/Axios";
 import BillTable from "../components/BillTable";
 import { Card, Button } from "react-bootstrap";
@@ -12,6 +12,7 @@ const BillDetail = (props) => {
       console.log(res.data);
       setDetail(res.data);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Convert this js code to more react looking code by using ref and React.createElement
