@@ -6,7 +6,7 @@ import Axios from "../utils/Axios";
 const Bills = () => {
   const [bills, setBills] = useState();
   useEffect(() => {
-    Axios.get("/bills.json").then((res) => {
+    Axios.get('/bills.json?orderBy="date"&limitToLast=100').then((res) => {
       console.log(Object.keys(res.data)[0]);
       setBills(res.data);
     });
