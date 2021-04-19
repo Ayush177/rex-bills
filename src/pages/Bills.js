@@ -2,17 +2,18 @@ import { navigate } from "@reach/router";
 import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import Axios from "../utils/Axios";
+import Analytics from "../components/Analytics";
 
 const Bills = () => {
   const [bills, setBills] = useState();
   useEffect(() => {
     Axios.get('/bills.json?orderBy="date"&limitToLast=100').then((res) => {
-      console.log(Object.keys(res.data)[0]);
       setBills(res.data);
     });
   }, []);
   return (
     <>
+      <Analytics />
       <h2 className="m-3 text-center">Recent Bills</h2>
       {bills
         ? Object.values(bills).map((bill, i) => (
