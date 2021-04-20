@@ -18,7 +18,10 @@ const BillDetail = (props) => {
   // Convert this js code to more react looking code by using ref and React.createElement
   const printDocument = (e) => {
     const canvas = document.getElementById("bill-sanpshot");
-    html2canvas(canvas).then((res) => {
+    html2canvas(canvas, {
+      scrollX: 0,
+      scrollY: -window.scrollY,
+    }).then((res) => {
       console.log(res);
       const a = document.createElement("a");
       a.href = res.toDataURL();
