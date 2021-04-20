@@ -27,12 +27,26 @@ const BillTable = (props) => {
               <td>{item.total}</td>
             </tr>
           ))}
+          {props.lastBalance ? (
+            <tr>
+              <td colSpan="4">
+                <strong>Last Balance</strong>
+              </td>
+              <td>
+                <strong style={{ color: "red" }}>{props.lastBalance}</strong>
+              </td>
+            </tr>
+          ) : (
+            ""
+          )}
           <tr>
             <td colSpan="4">
-              <strong>Grand Total</strong>
+              <strong style={{ fontSize: "18px" }}>Grand Total</strong>
             </td>
             <td>
-              <strong>{grandTotal}</strong>
+              <strong style={{ color: "green" }}>
+                {grandTotal + parseFloat(props.lastBalance)}
+              </strong>
             </td>
           </tr>
         </tbody>

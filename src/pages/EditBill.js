@@ -4,10 +4,20 @@ import BillTable from "../components/BillTable";
 
 const Bill = (props) => {
   const [items, setItems] = useState([]);
+  const [lastBalance, setLastBalance] = useState([]);
   return (
     <div className="m-3">
-      <BillForm setItems={setItems} items={items} id={props.id} />
-      {items.length ? <BillTable items={items} /> : ""}
+      <BillForm
+        setItems={setItems}
+        items={items}
+        id={props.id}
+        setLastBalance={setLastBalance}
+      />
+      {items.length ? (
+        <BillTable items={items} lastBalance={lastBalance} />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

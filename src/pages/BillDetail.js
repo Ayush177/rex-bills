@@ -43,7 +43,10 @@ const BillDetail = (props) => {
                 </h6>
                 <h6>{detail.date.split("-").reverse().join("-")}</h6>
               </div>
-              <BillTable items={detail.items} />
+              <BillTable
+                items={detail.items}
+                lastBalance={detail.lastBalance}
+              />
             </div>
           ) : (
             ""

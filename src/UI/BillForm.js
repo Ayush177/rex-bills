@@ -14,11 +14,18 @@ const BillForm = (props) => {
   const [date, setDate] = useState(today);
   const [submitDisable, setSubmitDisable] = useState(true);
   const [isDelhi, setIsDelhi] = useState(false);
+  const [isLastBalance, setIsLastBalance] = useState(false);
+  const [lastBalance, setLastBalance] = useState(0);
 
   useEffect(() => {
     if (props.items.length <= 0) setSubmitDisable(true);
     else setSubmitDisable(false);
   }, [props.items]);
+
+  useEffect(() => {
+    props.setLastBalance(lastBalance);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastBalance]);
 
   useEffect(() => {
     if (props.id)
@@ -52,6 +59,8 @@ const BillForm = (props) => {
         date,
         items: props.items,
         isDelhi,
+        isLastBalance,
+        lastBalance,
       })
         .then((res) => {
           setSubmitDisable(false);
@@ -131,6 +140,25 @@ const BillForm = (props) => {
             </Button>
           </div>
 
+          <Form.Group controlId="formBasicCheckbox">
+            <Form.Check
+              type="checkbox"
+              label="Last Balance"
+              checked={isLastBalance}
+              onChange={() => setIsLastBalance(!isLastBalance)}
+            />
+          </Form.Group>
+          {isLastBalance ? (
+            <Form.Control
+              type="text"
+              className="my-3"
+              placeholder="Enter item name"
+              value={lastBalance}
+              onChange={(e) => setLastBalance(e.target.value)}
+            />
+          ) : (
+            ""
+          )}
           <Form.Group controlId="formBasicCheckbox">
             <Form.Check
               type="checkbox"
