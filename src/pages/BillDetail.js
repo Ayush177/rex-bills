@@ -9,7 +9,6 @@ const BillDetail = (props) => {
   const [detail, setDetail] = useState();
   useEffect(() => {
     Axios.get(`/bills/${props.id}.json`).then((res) => {
-      console.log(res.data);
       setDetail(res.data);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -22,7 +21,6 @@ const BillDetail = (props) => {
       scrollX: 0,
       scrollY: -window.scrollY,
     }).then((res) => {
-      console.log(res);
       const a = document.createElement("a");
       a.href = res.toDataURL();
       a.download = `${detail.userName}(${detail.date}).png`;

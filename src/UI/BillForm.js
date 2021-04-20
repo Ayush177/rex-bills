@@ -21,10 +21,8 @@ const BillForm = (props) => {
   }, [props.items]);
 
   useEffect(() => {
-    console.log(date);
     if (props.id)
       Axios.get(`/bills/${props.id}.json`).then((res) => {
-        console.log("res data", res.data);
         setUserName(res.data.userName);
         setDate(res.data.date);
         setIsDelhi(res.data.isDelhi);
@@ -56,7 +54,6 @@ const BillForm = (props) => {
         isDelhi,
       })
         .then((res) => {
-          console.log(res);
           setSubmitDisable(false);
           navigate(`bill-detail/${res.data.name}`);
         })
@@ -72,7 +69,6 @@ const BillForm = (props) => {
         isDelhi,
       })
         .then((res) => {
-          console.log(res);
           setSubmitDisable(false);
           navigate(`/bill-detail/${props.id}`);
         })

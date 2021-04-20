@@ -25,14 +25,12 @@ const Analytics = () => {
         curMonth + 1
       )}-01"&endAt="${curYear}-${pad(curMonth + 1)}-30"`
     ).then((res) => {
-      console.log(res.data);
       Object.values(res.data).forEach((entry) => {
         let grandTotal = 0;
         entry.items.forEach((item) => (grandTotal += item.total));
         if (entry.isDelhi) curDelhi += grandTotal;
         else cur += grandTotal;
       });
-        console.log(cur, curDelhi);
       setCurMonthTotal(parseFloat(cur).toFixed(2));
       setCurMonthDelhiTotal(parseFloat(curDelhi).toFixed(2));
     });
@@ -41,7 +39,6 @@ const Analytics = () => {
         curMonth
       )}-01"&endAt="${curYear}-${pad(curMonth)}-30""`
     ).then((res) => {
-      console.log(res.data);
       Object.values(res.data).forEach((entry) => {
         let grandTotal = 0;
         entry.items.forEach((item) => (grandTotal += item.total));
