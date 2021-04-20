@@ -27,7 +27,7 @@ const Analytics = () => {
     ).then((res) => {
       Object.values(res.data).forEach((entry) => {
         let grandTotal = 0;
-        entry.items.forEach((item) => (grandTotal += item.total));
+        entry.items.forEach((item) => (grandTotal += parseFloat(item.total)));
         if (entry.isDelhi) curDelhi += grandTotal;
         else cur += grandTotal;
       });
@@ -41,7 +41,7 @@ const Analytics = () => {
     ).then((res) => {
       Object.values(res.data).forEach((entry) => {
         let grandTotal = 0;
-        entry.items.forEach((item) => (grandTotal += item.total));
+        entry.items.forEach((item) => (grandTotal += parseFloat(item.total)));
         if (entry.isDelhi) lastDelhi += grandTotal;
         else last += grandTotal;
       });

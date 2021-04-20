@@ -45,7 +45,9 @@ const BillTable = (props) => {
             </td>
             <td>
               <strong style={{ color: "green" }}>
-                {grandTotal + parseFloat(props.lastBalance)}
+                {props.lastBalance
+                  ? grandTotal + parseFloat(props.lastBalance)
+                  : grandTotal}
               </strong>
             </td>
           </tr>
