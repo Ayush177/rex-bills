@@ -28,14 +28,24 @@ const BillTable = (props) => {
             </tr>
           ))}
           {props.lastBalance ? (
-            <tr>
-              <td colSpan="4">
-                <strong>Last Balance</strong>
-              </td>
-              <td>
-                <strong style={{ color: "red" }}>{props.lastBalance}</strong>
-              </td>
-            </tr>
+            <>
+              <tr>
+                <td colSpan="4">
+                  <strong>Item Total</strong>
+                </td>
+                <td>
+                  <strong>{grandTotal}</strong>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="4">
+                  <strong>Last Balance</strong>
+                </td>
+                <td>
+                  <strong style={{ color: "red" }}>{props.lastBalance}</strong>
+                </td>
+              </tr>
+            </>
           ) : (
             ""
           )}
