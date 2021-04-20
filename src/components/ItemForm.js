@@ -24,8 +24,7 @@ const Items = (props) => {
   }, [props.items]);
 
   useEffect(() => {
-    if (itemQuantity >= 0)
-      setItemTotal(parseInt(itemPrice) * parseInt(itemQuantity));
+    if (itemQuantity >= 0) setItemTotal((itemPrice * itemQuantity).toFixed(2));
   }, [itemPrice, itemQuantity]);
 
   const isDuplicate = (curItem) => {
@@ -103,10 +102,11 @@ const Items = (props) => {
               <Form.Label>Item Price</Form.Label>
               <Form.Control
                 type="number"
+                step=".01"
                 required
                 placeholder="Enter item price"
                 value={itemPrice}
-                onChange={(e) => setItemPrice(parseInt(e.target.value))}
+                onChange={(e) => setItemPrice(parseFloat(e.target.value))}
                 isInvalid={itemPrice <= 0}
                 isValid={itemPrice > 0}
               />
@@ -119,10 +119,11 @@ const Items = (props) => {
               <Form.Label>Item Quantity</Form.Label>
               <Form.Control
                 type="number"
+                step=".01"
                 required
                 placeholder="Enter item quantity"
                 value={itemQuantity}
-                onChange={(e) => setItemQuantity(parseInt(e.target.value))}
+                onChange={(e) => setItemQuantity(parseFloat(e.target.value))}
                 isInvalid={itemQuantity <= 0}
                 isValid={itemQuantity > 0}
               />

@@ -3,7 +3,7 @@ import { Table, Card } from "react-bootstrap";
 const BillTable = (props) => {
   let grandTotal = 0;
   for (let item of props.items) {
-    grandTotal += parseInt(item.total);
+    grandTotal += parseFloat(item.total);
   }
   return (
     <Card>
