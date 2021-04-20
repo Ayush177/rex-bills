@@ -32,8 +32,9 @@ const Analytics = () => {
         if (entry.isDelhi) curDelhi += grandTotal;
         else cur += grandTotal;
       });
-      setCurMonthTotal(cur);
-      setCurMonthDelhiTotal(curDelhi);
+        console.log(cur, curDelhi);
+      setCurMonthTotal(parseFloat(cur).toFixed(2));
+      setCurMonthDelhiTotal(parseFloat(curDelhi).toFixed(2));
     });
     Axios.get(
       `/bills.json?orderBy="date"&estartAt="/bills.json?orderBy="date"&estartAt="${curYear}-${pad(
