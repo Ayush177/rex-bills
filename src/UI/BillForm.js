@@ -23,7 +23,7 @@ const BillForm = (props) => {
   }, [props.items]);
 
   useEffect(() => {
-    props.setLastBalance(lastBalance);
+    props.setLastBalance(parseFloat(lastBalance));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastBalance]);
 
@@ -34,6 +34,9 @@ const BillForm = (props) => {
         setDate(res.data.date);
         setIsDelhi(res.data.isDelhi);
         props.setItems(res.data.items);
+        setLastBalance(res.data.lastBalance);
+        setIsLastBalance(res.data.isLastBalance);
+        console.log(res.data);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -76,6 +79,8 @@ const BillForm = (props) => {
         date,
         items: props.items,
         isDelhi,
+        isLastBalance,
+        lastBalance,
       })
         .then((res) => {
           setSubmitDisable(false);

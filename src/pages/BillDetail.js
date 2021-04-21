@@ -11,6 +11,7 @@ const BillDetail = (props) => {
     Axios.get(`/bills/${props.id}.json`).then((res) => {
       setDetail(res.data);
     });
+    console.log(detail);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -45,7 +46,7 @@ const BillDetail = (props) => {
               </div>
               <BillTable
                 items={detail.items}
-                lastBalance={detail.lastBalance}
+                lastBalance={parseFloat(detail.lastBalance)}
               />
             </div>
           ) : (

@@ -14,7 +14,7 @@ const Bill = (props) => {
         setLastBalance={setLastBalance}
       />
       {items.length ? (
-        <BillTable items={items} lastBalance={lastBalance} />
+        <BillTable items={items} lastBalance={parseFloat(lastBalance)} />
       ) : (
         ""
       )}
